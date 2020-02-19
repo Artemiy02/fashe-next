@@ -8,13 +8,21 @@
     "start": "next start"
   },
   "dependencies": {
+    "history": "^4.10.1",
+    "jwt-decode": "^2.2.0",
     "next": "9.2.1",
     "react": "16.12.0",
-    "react-dom": "16.12.0"
+    "react-dom": "16.12.0",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5",
+    "redux-actions": "^2.6.5",
+    "redux-form": "^8.3.0",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@types/node": "^13.7.1",
     "@types/react": "^16.9.20",
+    "redux-devtools-extension": "^2.13.8",
     "typescript": "^3.7.5"
   }
 }

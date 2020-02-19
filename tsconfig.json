@@ -12,18 +12,19 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "components/*": ["./components/*"],
+      "styles/*": ["./styles/*"],
+      "services/*": ["./services/*"],
+      "utils/*": ["./utils/*"],
+      "actions/*": ["./actions/*"],
+      "reducers/*": ["./reducers/*"],
+      "selectors/*": ["./selectors/*"],
+      "types/*": ["./types/*"]
+    }
   },
   "exclude": ["node_modules"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "baseURL": ".",
-  "paths": {
-    "components/*": "./components/*",
-    "styles/*": "./styles/*",
-    "services/*": "./services/*",
-    "utils/*": "./utils/*",
-    "actions/*": "./actions/*",
-    "reducers/*": "./reducers/*",
-    "selectors/*": "./selectors/*"
-  }
+  "include": ["next-env.d.ts", "./**/*.ts", "./**/*.tsx"]
 }
