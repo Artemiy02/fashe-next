@@ -24,7 +24,7 @@ const checkTokenExpirationMiddleware = (store: Store) => (next: any) => (action:
 const middleware = applyMiddleware(thunk, checkTokenExpirationMiddleware);
 const persistedState = loadState();
 
-export const store = createStore(Reducer, persistedState, composeWithDevTools(middleware));
+// export const store = createStore(Reducer, persistedState, composeWithDevTools(middleware));
 
 // store.subscribe(() => {
 //   saveState({

@@ -3,6 +3,8 @@ import React from 'react';
 import { withReduxStore } from 'services/withReduxStore';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
+import 'react-animated-slider/build/horizontal.css';
+import 'styles/slider-animating.css';
 
 interface IMyAppProps {
   reduxStore: Store;

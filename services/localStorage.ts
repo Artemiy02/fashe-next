@@ -1,9 +1,5 @@
 import { cartState } from 'reducers/cart';
 
-interface ILocalStorage {
-  cart: cartState;
-}
-
 export const loadState = () => {
   try {
     const serializedState = localStorage.getItem('state');
@@ -16,7 +12,7 @@ export const loadState = () => {
   }
 };
 
-export const saveState = (state: ILocalStorage) => {
+export const saveState = (state: any) => {
   const serializedState = JSON.stringify(state);
   localStorage.setItem('state', serializedState);
 };
