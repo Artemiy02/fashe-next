@@ -1,7 +1,11 @@
-import { handleActions } from 'redux-actions';
-import { IProductCategory } from 'types/productCategory';
-import { productCategoriesActions } from 'actions/productCategories';
+import { createActionCreator, createReducer } from 'deox';
 import { SET_PRODUCT_CATEGORIES } from '../actions/actionTypes';
+import { IProductCategory } from 'types/productCategory';
+
+export const setProductCategoriesAction = createActionCreator(
+  SET_PRODUCT_CATEGORIES,
+  (resolve) => (payload: IProductCategory[]) => resolve(payload)
+);
 
 export interface IProductCategoryState {
   productCategories: IProductCategory[];
@@ -13,18 +17,12 @@ export const initialState: IProductCategoryState = {
   wasLoadProductCategories: false
 };
 
-const reducer = handleActions(
-  {
-    [SET_PRODUCT_CATEGORIES]: (
-      state: IProductCategoryState,
-      action: productCategoriesActions
-    ): IProductCategoryState => ({
-      ...state,
-      productCategories: action.payload,
-      wasLoadProductCategories: true
-    })
-  },
-  initialState
-);
+const reducer = createReducer(initialState, (handleAction) => [
+  handleAction(setProductCategoriesAction, (state, action) => ({
+    ...state,
+    productCategories: action.payload,
+    wasLoadProductCategories: true
+  }))
+]);
 
 export default reducer;

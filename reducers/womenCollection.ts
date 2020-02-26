@@ -1,7 +1,6 @@
-import { handleActions } from 'redux-actions';
+import { createActionCreator, createReducer } from 'deox';
 import { SET_WOMEN_COLLECTION } from 'actions/actionTypes';
 import { IWomenCollection } from 'types/womenCollection';
-import { womenCollectionActions } from 'actions/womenCollection';
 
 export interface IWomenCollectionState {
   womenCollection: IWomenCollection[];
@@ -13,18 +12,17 @@ export const initialState: IWomenCollectionState = {
   wasLoadWomenCollection: false
 };
 
-const reducer = handleActions(
-  {
-    [SET_WOMEN_COLLECTION]: (
-      state: IWomenCollectionState,
-      action: womenCollectionActions
-    ): IWomenCollectionState => ({
-      ...state,
-      womenCollection: action.payload,
-      wasLoadWomenCollection: true
-    })
-  },
-  initialState
+export const setWomenCollection = createActionCreator(
+  SET_WOMEN_COLLECTION,
+  (resolve) => (payload: IWomenCollection[]) => resolve(payload)
 );
+
+const reducer = createReducer(initialState, (handleAction) => [
+  handleAction(setWomenCollection, (state, action) => ({
+    ...state,
+    womenCollection: action.payload,
+    wasLoadWomenCollection: true
+  }))
+]);
 
 export default reducer;

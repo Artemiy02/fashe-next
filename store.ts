@@ -4,10 +4,12 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import Reducer from 'reducers';
 import jwtDecode from 'jwt-decode';
-import { setCurrentUser } from 'actions/Authorize';
+import { setCurrentUser } from 'reducers/Authorize';
 import { loadState, saveState } from 'services/localStorage';
 
-const checkTokenExpirationMiddleware = (store: Store) => (next: any) => (action: any) => {
+const checkTokenExpirationMiddleware = (store: Store) => (next: any) => (
+  action: any
+) => {
   if (localStorage.jwtToken) {
     // Decode token and get user info and exp
     const decoded: any = jwtDecode(localStorage.jwtToken);
@@ -41,5 +43,9 @@ const persistedState = loadState();
 // }
 
 export const initializeStore = (preloadedState = persistedState) => {
-  return createStore(Reducer, preloadedState, composeWithDevTools(applyMiddleware()));
+  return createStore(
+    Reducer,
+    preloadedState,
+    composeWithDevTools(applyMiddleware())
+  );
 };

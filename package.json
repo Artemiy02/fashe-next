@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "deox": "^3.2.1",
     "history": "^4.10.1",
     "js-cookie": "^2.2.1",
     "jwt-decode": "^2.2.0",
@@ -22,7 +23,8 @@
     "redux-actions": "^2.6.5",
     "redux-form": "^8.3.0",
     "redux-thunk": "^2.3.0",
-    "reselect": "^4.0.0"
+    "reselect": "^4.0.0",
+    "rxjs": "^6.5.4"
   },
   "devDependencies": {
     "@types/node": "^13.7.1",

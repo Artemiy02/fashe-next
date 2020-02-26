@@ -1,7 +1,6 @@
 import { SET_CURRENT_USER } from 'actions/actionTypes';
-import { handleActions } from 'redux-actions';
+import { createActionCreator, createReducer } from 'deox';
 import isEmpty from 'utils/is-empty';
-import { authorizeActions } from 'actions/Authorize';
 
 export interface IAuthorizeState {
   isAuthorize: boolean;
@@ -13,15 +12,17 @@ export const initialState: IAuthorizeState = {
   user: {}
 };
 
-const reducer = handleActions(
-  {
-    [SET_CURRENT_USER]: (state: IAuthorizeState, action: authorizeActions): IAuthorizeState => ({
-      ...state,
-      isAuthorize: !isEmpty(action.payload),
-      user: action.payload
-    })
-  },
-  initialState
+export const setCurrentUser = createActionCreator(
+  SET_CURRENT_USER,
+  (resolve) => (user: object) => resolve(user)
 );
+
+const reducer = createReducer(initialState, (handleAction) => [
+  handleAction(setCurrentUser, (state, action) => ({
+    ...state,
+    isAuthorize: !isEmpty(action.payload),
+    user: action.payload
+  }))
+]);
 
 export default reducer;

@@ -1,12 +1,9 @@
-import { createAction } from 'redux-actions';
-import { SET_WOMEN_COLLECTION } from 'actions/actionTypes';
-import { setToast } from 'actions/toast';
+import { setToast } from 'reducers/toast';
 import ApiService from 'services/ApiService';
 import { Dispatch } from 'redux';
 import { getErrors } from 'reducers/Errors';
-import { setCurrentUser } from './Authorize';
-
-export const setWomenCollection = createAction(SET_WOMEN_COLLECTION);
+import { setCurrentUser } from 'reducers/Authorize';
+import { setWomenCollection } from 'reducers/womenCollection';
 
 export const fetchWomenCollection = () => async (dispatch: Dispatch) => {
   try {
@@ -16,12 +13,16 @@ export const fetchWomenCollection = () => async (dispatch: Dispatch) => {
     }
     const res = await ApiService.get('/shop/collections', options);
     if (res.status === 401) {
-      dispatch(setToast({ type: 'error', message: 'Sorry, you are unauthorized!' }));
+      dispatch(
+        setToast({ type: 'error', message: 'Sorry, you are unauthorized!' })
+      );
       return dispatch(setCurrentUser({}));
     }
     const data = await res.json();
     if (!res.ok) {
-      dispatch(setToast({ type: 'error', message: Object.values(data)[0] }));
+      dispatch(
+        setToast({ type: 'error', message: Object.values(data)[0].toString() })
+      );
       return dispatch(getErrors(data));
     }
     dispatch(setWomenCollection(data));
@@ -29,5 +30,3 @@ export const fetchWomenCollection = () => async (dispatch: Dispatch) => {
     dispatch(setToast({ type: 'error', message: err.message }));
   }
 };
-
-export type womenCollectionActions = ReturnType<typeof setWomenCollection>;

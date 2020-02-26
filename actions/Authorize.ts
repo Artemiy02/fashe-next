@@ -1,4 +1,3 @@
-import { createAction } from 'redux-actions';
 import { SET_CURRENT_USER } from './actionTypes';
 import { setToast } from './toast';
 import { IUser } from 'types/Login';
@@ -7,18 +6,21 @@ import jwtDecode from 'jwt-decode';
 import ApiService from 'services/ApiService';
 import { getErrors } from 'reducers/Errors';
 import { History } from 'history';
-
-export const setCurrentUser = createAction(SET_CURRENT_USER);
+import { setCurrentUser } from 'reducers/Authorize';
 
 // Register user
-export const registerUser = (userData: any, history: History) => async (dispatch: Dispatch) => {
+export const registerUser = (userData: any, history: History) => async (
+  dispatch: Dispatch
+) => {
   try {
     const res = await ApiService.post('/users/register', userData);
     const data = await res.json();
     if (!res.ok) {
       return dispatch(getErrors(data));
     }
-    dispatch(setToast({ type: 'success', message: 'User was successfully created!' }));
+    dispatch(
+      setToast({ type: 'success', message: 'User was successfully created!' })
+    );
     history.push('/login');
   } catch (err) {
     dispatch(setToast({ type: 'error', message: err.message }));
@@ -53,7 +55,9 @@ export const loginUser = (userData: IUser) => async (dispatch: Dispatch) => {
 };
 
 // Login by socials
-export const socialLoginUser = (user: any, type: string) => async (dispatch: Dispatch) => {
+export const socialLoginUser = (user: any, type: string) => async (
+  dispatch: Dispatch
+) => {
   try {
     const res = await ApiService.post(`/users/auth/${type}`, user);
     const token = res.headers.get('x-auth-token');
@@ -85,5 +89,3 @@ export const logoutUser = () => (dispatch: Dispatch) => {
   // Set current user to {} which will set isAuthenticated to false
   dispatch(setCurrentUser({}));
 };
-
-export type authorizeActions = ReturnType<typeof setCurrentUser>;

@@ -1,6 +1,5 @@
-import { handleActions } from 'redux-actions';
+import { createActionCreator, createReducer } from 'deox';
 import { SET_TOAST, CLEAN_TOAST } from 'actions/actionTypes';
-import { toastActions } from 'actions/toast';
 
 export interface IToastState {
   type: null | string;
@@ -12,20 +11,23 @@ const initialState: IToastState = {
   message: ''
 };
 
-const toastReducer = handleActions(
-  {
-    [SET_TOAST]: (state: IToastState, action: toastActions): IToastState => ({
-      ...state,
-      type: action.payload.type,
-      message: action.payload.message
-    }),
-    [CLEAN_TOAST]: (state: IToastState): IToastState => ({
-      ...state,
-      type: null,
-      message: ''
-    })
-  },
-  initialState
+export const setToast = createActionCreator(
+  SET_TOAST,
+  (resolve) => (payload: IToastState) => resolve(payload)
 );
+export const cleanToast = createActionCreator(CLEAN_TOAST);
+
+const toastReducer = createReducer(initialState, (handleAction) => [
+  handleAction(setToast, (state, action) => ({
+    ...state,
+    type: action.payload.type,
+    message: action.payload.message
+  })),
+  handleAction(cleanToast, (state, action) => ({
+    ...state,
+    type: null,
+    message: ''
+  }))
+]);
 
 export default toastReducer;
