@@ -1,13 +1,15 @@
 import queryString from 'query-string';
 
-const URL =
-  process.env.NODE_ENV === 'production' ? process.env.API_PRODUCTION : process.env.API_DEVELOPMENT;
+const URL = 'https://fashe-backend.herokuapp.com';
+// process.env.NODE_ENV === 'production' ? process.env.API_PRODUCTION : process.env.API_DEVELOPMENT;
 
 export default {
   async get(url: string, options: any = {}) {
     let qs = '';
     if (options.qs) {
-      qs = (url.indexOf('?') === -1 ? '?' : '&') + queryString.stringify(options.qs);
+      qs =
+        (url.indexOf('?') === -1 ? '?' : '&') +
+        queryString.stringify(options.qs);
     }
     return fetch(`${URL}${url}${qs}`, {
       mode: 'cors',

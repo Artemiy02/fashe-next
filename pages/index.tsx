@@ -1,16 +1,13 @@
-import React, { useEffect, FunctionComponent } from 'react';
-
-import { useRouter } from 'next/router';
-
 import Slider from 'components/common/Slider';
 import Gallery from 'components/common/Masonry';
-
-import { useStore, useDispatch, useSelector } from 'react-redux';
-import { fetchProductCategories } from 'actions/productCategories';
 import getCollectionsSelector from 'selectors/collections';
+import React, { useEffect, FunctionComponent } from 'react';
+import LastElementMasonry from 'components/Home/components/LastElementMasonry';
+import { useRouter } from 'next/router';
 import { getFullCategoriesSelector } from 'selectors/category';
 import { fetchWomenCollection } from 'actions/womenCollection';
-import LastElementMasonry from 'components/Home/components/LastElementMasonry';
+import { useStore, useDispatch, useSelector } from 'react-redux';
+import { fetchProductCategories } from 'actions/productCategories';
 
 // TODO: add selectors
 
@@ -18,9 +15,9 @@ export const Home: FunctionComponent = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location]);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, [location]);
 
   // fetching data
   const { wasLoadWomenCollection } = useStore().getState().womenCollection;
@@ -48,7 +45,9 @@ export const Home: FunctionComponent = () => {
         dataArray={productCategories}
         isLoad={wasLoadProductCategories}
         fetchData={fetchProductCategories}
-        onButtonClick={(category) => router.push(`/shop?category=${category.toLowerCase()}`)}
+        onButtonClick={(category) =>
+          router.push(`/shop?category=${category.toLowerCase()}`)
+        }
         lastElement={LastElementMasonry}
       />
     </>

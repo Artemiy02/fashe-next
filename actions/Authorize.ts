@@ -1,5 +1,5 @@
 import { SET_CURRENT_USER } from './actionTypes';
-import { setToast } from './toast';
+import { setToast } from 'reducers/toast';
 import { IUser } from 'types/Login';
 import { Dispatch } from 'redux';
 import jwtDecode from 'jwt-decode';

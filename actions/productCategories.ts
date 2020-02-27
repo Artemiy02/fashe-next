@@ -1,9 +1,6 @@
-import { createAction } from 'redux-actions';
-import { Dispatch } from 'redux';
-
-import { SET_PRODUCT_CATEGORIES } from 'actions/actionTypes';
-import { setToast } from 'reducers/toast';
 import ApiService from 'services/ApiService';
+import { Dispatch } from 'redux';
+import { setToast } from 'reducers/toast';
 import { getErrors } from 'reducers/Errors';
 import { setCurrentUser } from 'reducers/Authorize';
 import { setProductCategoriesAction } from 'reducers/productCategories';
