@@ -1,16 +1,22 @@
 const withImages = require('next-images');
 const withSass = require('@zeit/next-sass');
+const withCSS = require('@zeit/next-css');
 
 module.exports = withSass(
-  withImages({
-    webpack(config, options) {
-      config.resolve.modules.push(__dirname);
-      config.module.rules.push({
-        test: /\.css$/,
-        loader: ['css-loader', 'sass-loader']
-      });
+  withCSS(
+    withImages({
+      env: {
+        GOOGLE_CLIENT_ID:
+          '835627805452-tjq6u0ed9mk5aigjmvff5o620tkm9nhs.apps.googleusercontent.com',
+        FACEBOOK_CLIENT_ID: 1263976573763379,
+        API_PRODUCTION: 'https://fashe-backend.herokuapp.com',
+        API_DEVELOPMENT: 'http://localhost:3333,'
+      },
+      webpack(config, options) {
+        config.resolve.modules.push(__dirname);
 
-      return config;
-    }
-  })
+        return config;
+      }
+    })
+  )
 );

@@ -1,10 +1,10 @@
-import React, { FunctionComponent } from 'react';
 import GoogleLogin from 'react-google-login';
-import { socialLoginUser } from 'actions/Authorize';
+import React, { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
+import { socialLoginUser } from 'actions/Authorize';
 
 interface IGoogleProps {
-  buttonText: string
+  buttonText: string;
 }
 
 const Google: FunctionComponent<IGoogleProps> = ({ buttonText }) => {
@@ -14,12 +14,11 @@ const Google: FunctionComponent<IGoogleProps> = ({ buttonText }) => {
     const user = {
       id: response.profileObj.googleId,
       name: response.profileObj.name,
-      email: response.profileObj.email,
+      email: response.profileObj.email
     };
 
     dispatch(socialLoginUser(user, 'google'));
   };
-
 
   return (
     <GoogleLogin
