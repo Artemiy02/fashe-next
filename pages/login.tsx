@@ -19,15 +19,17 @@ export type AllFormProps = IUser & InjectedFormProps<IUser> & ILoginFormProps;
 const LoginForm: FunctionComponent<AllFormProps> = ({ handleSubmit }) => {
   const dispatch = useDispatch();
 
+  const onSubmit = (values: any) => {
+    dispatch(loginUser(values));
+  };
+
   return (
     <div className="wrapper">
       <div className="login_form">
         <div className="main_title">
           <h2>Login Page</h2>
         </div>
-        <form
-          className="contact_us_form"
-          onSubmit={handleSubmit(dispatch(loginUser))}>
+        <form className="contact_us_form" onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group mb-20">
             <Field
               name="email"

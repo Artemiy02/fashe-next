@@ -8,6 +8,7 @@ import { getFullCategoriesSelector } from 'selectors/category';
 import { fetchWomenCollection } from 'actions/womenCollection';
 import { useStore, useDispatch, useSelector } from 'react-redux';
 import { fetchProductCategories } from 'actions/productCategories';
+import Layout from 'components/layout/Layout';
 
 // TODO: add selectors
 
@@ -35,7 +36,7 @@ export const Home: FunctionComponent = () => {
   const womenCollection = useSelector(getCollectionsSelector);
 
   return (
-    <>
+    <Layout>
       <Slider
         data={womenCollection}
         isLoad={wasLoadWomenCollection}
@@ -50,7 +51,7 @@ export const Home: FunctionComponent = () => {
         }
         lastElement={LastElementMasonry}
       />
-    </>
+    </Layout>
   );
 };
 

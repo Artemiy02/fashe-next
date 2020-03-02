@@ -1,19 +1,15 @@
-import { createAction } from 'redux-actions';
 import { Dispatch } from 'redux';
 
-import {
-  SET_PRODUCTS, SET_PENDING_STATE, GET_PRODUCTS, SET_CURRENT_PAGE
-} from 'actions/actionTypes';
-import { setToast } from 'actions/toast';
+import { setToast } from 'reducers/toast';
 import ApiService from 'services/ApiService';
 import { getErrors } from 'reducers/Errors';
 import { currentPageSelector, limitSelector } from 'selectors/products';
-import { setCurrentUser } from './Authorize';
-
-export const setProductsAction = createAction(SET_PRODUCTS);
-export const setCurrentPageAction = createAction(SET_CURRENT_PAGE);
-const actionSetPendingState = createAction(SET_PENDING_STATE);
-const actionGetProducts = createAction(GET_PRODUCTS);
+import {
+  setProductsAction,
+  actionSetPendingState,
+  actionGetProducts
+} from 'reducers/products';
+import { setCurrentUser } from 'reducers/Authorize';
 
 export const fetchProducts = () => async (dispatch: Dispatch) => {
   try {
@@ -23,12 +19,16 @@ export const fetchProducts = () => async (dispatch: Dispatch) => {
     }
     const res = await ApiService.get('/shop/products', options);
     if (res.status === 401) {
-      dispatch(setToast({ type: 'error', message: 'Sorry, you are unauthorized!' }));
+      dispatch(
+        setToast({ type: 'error', message: 'Sorry, you are unauthorized!' })
+      );
       return dispatch(setCurrentUser({}));
     }
     const data = await res.json();
     if (!res.ok) {
-      dispatch(setToast({ type: 'error', message: Object.values(data)[0] }));
+      dispatch(
+        setToast({ type: 'error', message: Object.values(data)[0].toString() })
+      );
       return dispatch(getErrors(data));
     }
     dispatch(setProductsAction(data));
@@ -36,7 +36,6 @@ export const fetchProducts = () => async (dispatch: Dispatch) => {
     dispatch(setToast({ type: 'error', message: err.message }));
   }
 };
-
 
 export const getProducts = () => async (dispatch: Dispatch, getState: any) => {
   try {
@@ -48,7 +47,7 @@ export const getProducts = () => async (dispatch: Dispatch, getState: any) => {
     const params: any = {
       qs: {
         limit,
-        page,
+        page
       }
     };
 
@@ -59,11 +58,13 @@ export const getProducts = () => async (dispatch: Dispatch, getState: any) => {
 
     const data = await res.json();
     if (!res.ok) {
-      dispatch(setToast({ type: 'error', message: Object.values(data)[0] }));
+      dispatch(
+        setToast({ type: 'error', message: Object.values(data)[0].toString() })
+      );
       return dispatch(getErrors(data));
     }
     const { headers } = res;
-    const count = headers.get('x-total-count') && Number(headers.get('x-total-count'));
+    const count = Number(headers?.get('x-total-count'));
 
     dispatch(actionGetProducts({ data, count }));
     dispatch(actionSetPendingState(false));

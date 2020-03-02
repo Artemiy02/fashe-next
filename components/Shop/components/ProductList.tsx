@@ -3,7 +3,7 @@ import Masonry from 'react-masonry-component';
 
 import { IProduct } from 'types/Shop';
 import { useDispatch } from 'react-redux';
-import { setCurrentPageAction } from 'actions/products';
+import { setCurrentPageAction } from 'reducers/products';
 import ProductItem from './ProductItem';
 import Pagination from './Pagination';
 
@@ -17,11 +17,13 @@ const ProductList: FunctionComponent<IProductListProps> = ({ products }) => {
     <div className="product-list-wrapper">
       <div style={{ width: '100%' }}>
         <Masonry className="p-l-30">
-          {products && products.map(p => (
+          {products?.map((p) => (
             <ProductItem key={p._id} product={p} />
           ))}
         </Masonry>
-        <Pagination handlePageClick={p => dispatch(setCurrentPageAction(p.selected))} />
+        <Pagination
+          handlePageClick={(p) => dispatch(setCurrentPageAction(p.selected))}
+        />
       </div>
     </div>
   );

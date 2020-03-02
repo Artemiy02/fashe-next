@@ -1,10 +1,9 @@
-import React, { useEffect, FunctionComponent } from 'react';
-
-import { ToastContainer, toast, ToastOptions } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { cleanToast } from 'actions/toast';
 import getToastSelector from 'selectors/toast';
+import React, { useEffect, FunctionComponent } from 'react';
+import { cleanToast } from 'reducers/toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer, toast, ToastOptions } from 'react-toastify';
 
 const Toasts: FunctionComponent = () => {
   const dispatch = useDispatch();

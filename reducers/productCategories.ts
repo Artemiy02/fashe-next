@@ -1,6 +1,7 @@
 import { createActionCreator, createReducer } from 'deox';
-import { SET_PRODUCT_CATEGORIES } from '../actions/actionTypes';
+
 import { IProductCategory } from 'types/productCategory';
+import { SET_PRODUCT_CATEGORIES } from 'actions/actionTypes';
 
 export const setProductCategoriesAction = createActionCreator(
   SET_PRODUCT_CATEGORIES,

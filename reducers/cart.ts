@@ -3,6 +3,10 @@ import { createActionCreator, createReducer } from 'deox';
 import { IProduct } from 'types/Shop';
 import { ADD_TO_CART, DELETE_FROM_CART } from '../actions/actionTypes';
 
+export interface ICartProduct extends IProduct {
+  count: number | 0;
+}
+
 export const addToCartAction = createActionCreator(
   ADD_TO_CART,
   (resolve) => (cartsProduct: ICartProduct) => resolve(cartsProduct)
@@ -12,10 +16,6 @@ export const deleteFromCartAction = createActionCreator(
   DELETE_FROM_CART,
   (resolve) => (id: string | number) => resolve(id)
 );
-
-export interface ICartProduct extends IProduct {
-  count: number | 0;
-}
 
 export type cartState = ICartProduct[];
 export const initialState: cartState = [];

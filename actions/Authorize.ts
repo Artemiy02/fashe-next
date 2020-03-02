@@ -1,11 +1,10 @@
-import { SET_CURRENT_USER } from './actionTypes';
-import { setToast } from 'reducers/toast';
-import { IUser } from 'types/Login';
-import { Dispatch } from 'redux';
 import jwtDecode from 'jwt-decode';
 import ApiService from 'services/ApiService';
-import { getErrors } from 'reducers/Errors';
+import { Dispatch } from 'redux';
 import { History } from 'history';
+import { IUser } from 'types/Login';
+import { setToast } from 'reducers/toast';
+import { getErrors } from 'reducers/Errors';
 import { setCurrentUser } from 'reducers/Authorize';
 
 // Register user

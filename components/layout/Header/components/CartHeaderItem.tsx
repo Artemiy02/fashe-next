@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteFromCartAction } from 'actions/cart';
+import { deleteFromCartAction } from 'reducers/cart';
 
 export interface ICartHeaderItemProps {
   id: string | number;
@@ -28,8 +28,7 @@ const CartHeaderItem: FunctionComponent<ICartHeaderItemProps> = ({
         onClick={() => {
           dispatch(deleteFromCartAction(id));
           return openPortal;
-        }}
-      >
+        }}>
         <img src={image} alt="IMG" />
       </div>
 
@@ -39,11 +38,7 @@ const CartHeaderItem: FunctionComponent<ICartHeaderItemProps> = ({
         </button>
 
         <span className="header-cart-item-info">
-          {count}
-          {' '}
-x
-          {' '}
-          {price}
+          {count} x {price}
         </span>
       </div>
     </li>
