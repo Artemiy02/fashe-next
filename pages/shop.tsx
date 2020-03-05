@@ -18,7 +18,7 @@ import {
 
 const Shop: FunctionComponent = () => {
   const currentPage = useSelector(currentPageSelector);
-  const products: IProduct[] = useSelector(productsByPageSelector);
+  const products = useSelector(productsByPageSelector);
 
   const dispatch = useDispatch();
 

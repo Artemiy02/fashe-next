@@ -1,4 +1,3 @@
-import 'styles/login.scss';
 import Google from 'components/common/Google';
 import React, { FunctionComponent } from 'react';
 import Facebook from 'components/common/Facebook';

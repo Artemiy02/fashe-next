@@ -1,13 +1,13 @@
-import jwtDecode from 'jwt-decode';
 import Cookie from 'js-cookie';
 import Router from 'next/router';
+import jwtDecode from 'jwt-decode';
+
+const TOKEN_STORAGE_KEY = 'myApp.authToken';
 
 export type DecodedToken = {
   readonly email: string;
   readonly exp: number;
 };
-
-const TOKEN_STORAGE_KEY = 'myApp.authToken';
 
 export class AuthToken {
   readonly decodedToken: DecodedToken;
@@ -19,7 +19,9 @@ export class AuthToken {
     // then try and decode the jwt using jwt-decode
     try {
       if (token) this.decodedToken = jwtDecode(token);
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   static async storeToken(token: string) {

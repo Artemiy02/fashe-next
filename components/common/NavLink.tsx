@@ -13,6 +13,7 @@ const ActiveLink = ({ children, href }) => {
   };
 
   return (
+    // eslint-disable-next-line react/react-in-jsx-scope
     <a href={href} onClick={handleClick} style={style}>
       {children}
     </a>

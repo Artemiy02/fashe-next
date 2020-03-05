@@ -9,6 +9,7 @@ import { fetchWomenCollection } from 'actions/womenCollection';
 import { useStore, useDispatch, useSelector } from 'react-redux';
 import { fetchProductCategories } from 'actions/productCategories';
 import Layout from 'components/layout/Layout';
+import { PrivateRoute } from 'components/common/PrivateRoute';
 
 // TODO: add selectors
 
@@ -55,4 +56,4 @@ export const Home: FunctionComponent = () => {
   );
 };
 
-export default Home;
+export default PrivateRoute(Home);

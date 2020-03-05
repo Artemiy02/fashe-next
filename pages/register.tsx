@@ -1,4 +1,3 @@
-import 'styles/login.scss';
 import authSelector from 'selectors/auth';
 import errorsSelector from 'selectors/errors';
 import Google from 'components/common/Google';
