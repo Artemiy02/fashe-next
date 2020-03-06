@@ -7,6 +7,7 @@ import productsReducer from './products';
 import authorizeReducer from './Authorize';
 import womenCollectionReducer from './womenCollection';
 import productCategoriesReducer from './productCategories';
+import initPathReducer from './initialPath';
 
 const rootReducer = combineReducers({
   toast: toastReducer,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   productCategories: productCategoriesReducer,
   shop: productsReducer,
   cart: cartReducer,
-  errors: errorsReducer
+  errors: errorsReducer,
+  initPath: initPathReducer
 });
 
 export type AppState = any;

@@ -3,9 +3,9 @@ import thunk from 'redux-thunk';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import Reducer from 'reducers';
-import jwtDecode from 'jwt-decode';
-import { setCurrentUser } from 'reducers/Authorize';
-import { loadState, saveState } from 'services/localStorage';
+// import jwtDecode from 'jwt-decode';
+// import { setCurrentUser } from 'reducers/Authorize';
+// import { loadState, saveState } from 'services/localStorage';
 
 // const checkTokenExpirationMiddleware = (store: Store) => (next: any) => (
 //   action: any
@@ -24,7 +24,7 @@ import { loadState, saveState } from 'services/localStorage';
 // };
 
 const middleware = applyMiddleware(thunk);
-const persistedState = loadState();
+// const persistedState = loadState();
 
 // export const store = createStore(Reducer, persistedState, composeWithDevTools(middleware));
 
@@ -42,6 +42,15 @@ const persistedState = loadState();
 //   store.dispatch(setCurrentUser(decoded));
 // }
 
-export const initializeStore = (preloadedState = persistedState) => {
-  return createStore(Reducer, preloadedState, composeWithDevTools(middleware));
+let store = null;
+
+export const initializeStore = (preloadedState = {}) => {
+  if (!store) {
+    store = createStore(
+      Reducer,
+      preloadedState,
+      composeWithDevTools(middleware)
+    );
+  }
+  return store;
 };

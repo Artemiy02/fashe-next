@@ -1,3 +1,4 @@
+/* eslint-disable */
 import 'styles/shop.scss';
 // import queryString from 'query-string';
 import Layout from 'components/layout/Layout';
@@ -15,6 +16,7 @@ import {
   productsByPageSelector,
   getWasLoadProductsSelector
 } from 'selectors/products';
+import { PrivateRoute } from 'components/common/PrivateRoute';
 
 const Shop: FunctionComponent = () => {
   const currentPage = useSelector(currentPageSelector);
@@ -90,4 +92,4 @@ const Shop: FunctionComponent = () => {
   );
 };
 
-export default Shop;
+export default PrivateRoute(Shop);

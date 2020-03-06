@@ -6,6 +6,7 @@ import { IUser } from 'types/Login';
 import { setToast } from 'reducers/toast';
 import { getErrors } from 'reducers/Errors';
 import { setCurrentUser } from 'reducers/Authorize';
+import { AuthToken } from 'services/auth_token';
 
 // Register user
 export const registerUser = (userData: any, history: History) => async (
@@ -40,7 +41,7 @@ export const loginUser = (userData: IUser) => async (dispatch: Dispatch) => {
     }
     if (token) {
       // Set token to localStorage
-      localStorage.setItem('jwtToken', token);
+      await AuthToken.storeToken(token);
       // Decode token to get user data
       const decoded = jwtDecode(token);
       // Set current user
