@@ -4,12 +4,15 @@ import { setToast } from 'reducers/toast';
 import { getErrors } from 'reducers/Errors';
 import { setCurrentUser } from 'reducers/Authorize';
 import { setProductCategoriesAction } from 'reducers/productCategories';
+import Cookie from 'js-cookie';
+import { TOKEN_STORAGE_KEY } from 'services/auth_token';
 
 export const fetchProductCategories = () => async (dispatch: Dispatch) => {
   try {
     const options: any = {};
-    if (localStorage.jwtToken) {
-      options.headers = { Authorization: localStorage.jwtToken };
+    const token = Cookie.get(TOKEN_STORAGE_KEY);
+    if (token) {
+      options.headers = { Authorization: token };
     }
     const res = await ApiService.get('/shop/product-categories', options);
     if (res.status === 401) {

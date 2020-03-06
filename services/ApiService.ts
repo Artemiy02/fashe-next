@@ -1,7 +1,9 @@
 import queryString from 'query-string';
 
-const URL = 'https://fashe-backend.herokuapp.com';
-// process.env.NODE_ENV === 'production' ? process.env.API_PRODUCTION : process.env.API_DEVELOPMENT;
+const URL =
+  process.env.NODE_ENV === 'production'
+    ? process.env.API_PRODUCTION
+    : process.env.API_DEVELOPMENT;
 
 export default {
   async get(url: string, options: any = {}) {

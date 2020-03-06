@@ -2,7 +2,7 @@ import Cookie from 'js-cookie';
 import Router from 'next/router';
 import jwtDecode from 'jwt-decode';
 
-const TOKEN_STORAGE_KEY = 'myApp.authToken';
+export const TOKEN_STORAGE_KEY = 'myApp.authToken';
 
 export type DecodedToken = {
   readonly email: string;

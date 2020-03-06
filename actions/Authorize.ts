@@ -1,17 +1,16 @@
 import jwtDecode from 'jwt-decode';
 import ApiService from 'services/ApiService';
-import { Dispatch } from 'redux';
-import { History } from 'history';
+import { Dispatch, State } from 'redux';
 import { IUser } from 'types/Login';
 import { setToast } from 'reducers/toast';
 import { getErrors } from 'reducers/Errors';
 import { setCurrentUser } from 'reducers/Authorize';
 import { AuthToken } from 'services/auth_token';
+import Router from 'next/router';
+import initPathSelector from 'selectors/initPath';
 
 // Register user
-export const registerUser = (userData: any, history: History) => async (
-  dispatch: Dispatch
-) => {
+export const registerUser = (userData: any) => async (dispatch: Dispatch) => {
   try {
     const res = await ApiService.post('/users/register', userData);
     const data = await res.json();
@@ -21,14 +20,17 @@ export const registerUser = (userData: any, history: History) => async (
     dispatch(
       setToast({ type: 'success', message: 'User was successfully created!' })
     );
-    history.push('/login');
+    Router.push('/login');
   } catch (err) {
     dispatch(setToast({ type: 'error', message: err.message }));
   }
 };
 
 // Login - Get User Token
-export const loginUser = (userData: IUser) => async (dispatch: Dispatch) => {
+export const loginUser = (userData: IUser) => async (
+  dispatch: Dispatch,
+  getState: () => State
+) => {
   try {
     const res = await ApiService.post('/users/login', userData);
     const token = res.headers.get('x-auth-token');
@@ -39,13 +41,17 @@ export const loginUser = (userData: IUser) => async (dispatch: Dispatch) => {
       dispatch(setToast({ type: 'error', message: data.login }));
       return dispatch(getErrors(data));
     }
+    const path = initPathSelector(getState()) || '/';
     if (token) {
       // Set token to localStorage
       await AuthToken.storeToken(token);
       // Decode token to get user data
       const decoded = jwtDecode(token);
+
       // Set current user
       dispatch(setCurrentUser(decoded));
+      Router.push(path);
+
       return dispatch(setToast({ type: 'success', message: 'Login success!' }));
     }
     dispatch(setToast({ type: 'error', message: 'Something went wrong!' }));
@@ -56,7 +62,8 @@ export const loginUser = (userData: IUser) => async (dispatch: Dispatch) => {
 
 // Login by socials
 export const socialLoginUser = (user: any, type: string) => async (
-  dispatch: Dispatch
+  dispatch: Dispatch,
+  getState: () => State
 ) => {
   try {
     const res = await ApiService.post(`/users/auth/${type}`, user);
@@ -67,13 +74,17 @@ export const socialLoginUser = (user: any, type: string) => async (
       dispatch(setToast({ type: 'error', message: data.login }));
       return dispatch(getErrors(data));
     }
+    const path = initPathSelector(getState()) || '/';
     if (token) {
       // Set token to localStorage
-      localStorage.setItem('jwtToken', token);
+      await AuthToken.storeToken(token);
       // Decode token to get user data
       const decoded = jwtDecode(token);
+
       // Set current user
       dispatch(setCurrentUser(decoded));
+      Router.push(path);
+
       return dispatch(setToast({ type: 'success', message: 'Login success!' }));
     }
     dispatch(setToast({ type: 'error', message: 'Something went wrong!' }));
