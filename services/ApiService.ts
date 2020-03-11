@@ -9,9 +9,9 @@ export default {
   async get(url: string, options: any = {}) {
     let qs = '';
     if (options.qs) {
-      qs =
-        (url.indexOf('?') === -1 ? '?' : '&') +
-        queryString.stringify(options.qs);
+      qs = `${url.indexOf('?') === -1 ? '?' : '&'}${queryString.stringify(
+        options.qs
+      )}`;
     }
     return fetch(`${URL}${url}${qs}`, {
       mode: 'cors',

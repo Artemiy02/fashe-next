@@ -10,9 +10,10 @@ export const getWasLoadProductsSelector = createSelector(
   (items) => items.wasLoadProducts
 );
 
-export const getProductsItemsSelector = createSelector(shop, (items) => {
-  return items.items;
-});
+export const getProductsItemsSelector = createSelector(
+  shop,
+  (items) => items.items
+);
 
 export const currentPageSelector = createSelector(
   [shop],
@@ -21,7 +22,7 @@ export const currentPageSelector = createSelector(
 
 export const productsByPageSelector = createSelector(
   [getProductsItemsSelector, currentPageSelector],
-  (items, page) => items.get(page)
+  (items, page) => items[page]
 );
 
 export const pageCountSelector = createSelector([shop], (items) => {

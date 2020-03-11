@@ -10,12 +10,15 @@ import {
   actionGetProducts
 } from 'reducers/products';
 import { setCurrentUser } from 'reducers/Authorize';
+import Cookie from 'js-cookie';
+import { TOKEN_STORAGE_KEY } from 'services/auth_token';
 
 export const fetchProducts = () => async (dispatch: Dispatch) => {
   try {
     const options: any = {};
-    if (localStorage.jwtToken) {
-      options.headers = { Authorization: localStorage.jwtToken };
+    const token = Cookie.get(TOKEN_STORAGE_KEY);
+    if (token) {
+      options.headers = { Authorization: token };
     }
     const res = await ApiService.get('/shop/products', options);
     if (res.status === 401) {
@@ -51,9 +54,11 @@ export const getProducts = () => async (dispatch: Dispatch, getState: any) => {
       }
     };
 
-    if (localStorage.jwtToken) {
-      params.headers = { Authorization: localStorage.jwtToken };
+    const token = Cookie.get(TOKEN_STORAGE_KEY);
+    if (token) {
+      params.headers = { Authorization: token };
     }
+
     const res = await ApiService.get('/shop/products', params);
 
     const data = await res.json();
@@ -63,10 +68,8 @@ export const getProducts = () => async (dispatch: Dispatch, getState: any) => {
       );
       return dispatch(getErrors(data));
     }
-    const { headers } = res;
-    const count = Number(headers?.get('x-total-count'));
 
-    dispatch(actionGetProducts({ data, count }));
+    dispatch(actionGetProducts(data));
     dispatch(actionSetPendingState(false));
   } catch (err) {
     console.log(err);

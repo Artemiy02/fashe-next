@@ -47,9 +47,9 @@ export const Home: FunctionComponent = () => {
         dataArray={productCategories}
         isLoad={wasLoadProductCategories}
         fetchData={fetchProductCategories}
-        onButtonClick={(category) =>
-          router.push(`/shop?category=${category.toLowerCase()}`)
-        }
+        onButtonClick={(category) => {
+          router.push(`/shop?category=${category.toLowerCase()}`);
+        }}
         lastElement={LastElementMasonry}
       />
     </Layout>

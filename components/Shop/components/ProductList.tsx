@@ -1,6 +1,5 @@
-import React, { FunctionComponent } from 'react';
 import Masonry from 'react-masonry-component';
-
+import React, { FunctionComponent } from 'react';
 import { IProduct } from 'types/Shop';
 import { useDispatch } from 'react-redux';
 import { setCurrentPageAction } from 'reducers/products';

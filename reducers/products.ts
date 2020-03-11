@@ -23,9 +23,8 @@ export const actionGetProducts = createActionCreator(
   GET_PRODUCTS,
   (resolve) => (payload: any) => resolve(payload)
 );
-
 export interface IProductsState {
-  items: Map<number, IProduct[]>;
+  items: { [key: number]: IProduct[] };
   currentPage: number;
   limit: number;
   count: number;
@@ -35,7 +34,7 @@ export interface IProductsState {
 }
 
 export const initialState: IProductsState = {
-  items: new Map([[0, []]]),
+  items: { 0: [] },
   currentPage: 0,
   limit: 6,
   count: 0,
@@ -45,9 +44,8 @@ export const initialState: IProductsState = {
 };
 
 const getProducts = (state, action) => {
-  const newItems = new Map(state.items);
-  newItems.set(state.currentPage, action.payload.data);
-
+  const newItems = { ...state.items };
+  newItems[state.currentPage] = action.payload.products;
   return {
     ...state,
     items: newItems,
