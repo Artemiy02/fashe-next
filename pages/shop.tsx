@@ -17,18 +17,15 @@ import {
   getWasLoadProductsSelector
 } from 'selectors/products';
 import { PrivateRoute } from 'components/common/PrivateRoute';
+import { NextPage } from 'next';
 
-const Shop: FunctionComponent = () => {
+const Shop = (props) => {
   const currentPage = useSelector(currentPageSelector);
   const products = useSelector(productsByPageSelector);
 
   const dispatch = useDispatch();
 
   const router = useRouter();
-
-  //   useEffect(() => {
-  //     window.scrollTo(0, 0);
-  //   }, [location]);
 
   // fetching data
   const wasLoadProductCategories = useSelector(getWasLoadProductsSelector);
@@ -41,14 +38,16 @@ const Shop: FunctionComponent = () => {
     dispatch(getProducts());
   }, [currentPage, dispatch]);
 
-  const [queryParam, setQueryParam] = useState(null);
+  // const [queryParam, setQueryParam] = useState(props.queryParam);
   const initialCategory = { title: 'All', isActive: true } as ICategory;
 
   const [allCategories, setAllCategories] = useState([
     initialCategory
   ] as ICategory[]);
 
-  const changeActiveCategory = (str: string) =>
+  const changeActiveCategory = (str: string) => {
+    console.log('dddddddddddddddd', str);
+
     setAllCategories(
       allCategories.map((c) =>
         c.title.toLocaleLowerCase() === str.toLocaleLowerCase()
@@ -56,21 +55,26 @@ const Shop: FunctionComponent = () => {
           : { ...c, isActive: false }
       )
     );
+  };
 
   const categoriesInStore = useSelector(getCategoriesSelector);
 
   useEffect(() => {
     if (Array.isArray(categoriesInStore) && categoriesInStore.length) {
       setAllCategories([initialCategory, ...categoriesInStore]);
-      setQueryParam(router?.query?.category);
+      // setQueryParam(router?.query?.category);
     }
-  }, [categoriesInStore, router?.query?.category]);
+  }, [categoriesInStore]);
+
+  const queryParam = router?.query?.category?.toString();
 
   useEffect(() => {
+    console.log('router : ', router?.query?.category);
     if (queryParam) {
       const exist = (categoriesInStore as ICategory[]).find(
         (c) => c.title.toLowerCase() === queryParam.toLowerCase()
       );
+      console.log('exist: ', exist);
       exist ? changeActiveCategory(queryParam) : changeActiveCategory('all');
     }
   }, [queryParam]);
@@ -90,6 +94,16 @@ const Shop: FunctionComponent = () => {
       </section>
     </Layout>
   );
+};
+
+Shop.getInitialProps = async (ctx) => {
+  console.log('---Query---', ctx.query.category);
+  const category = ctx?.query?.category;
+  return category
+    ? {
+        queryParam: category
+      }
+    : {};
 };
 
 export default PrivateRoute(Shop);

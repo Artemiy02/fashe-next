@@ -15,15 +15,12 @@ export type AllFormProps = IUser &
   InjectedFormProps<INewUser> &
   RouteComponentProps;
 
-const RegisterForm: FunctionComponent<AllFormProps> = ({
-  handleSubmit,
-  history
-}) => {
+const RegisterForm: FunctionComponent<AllFormProps> = ({ handleSubmit }) => {
   const errors = useSelector(errorsSelector);
   const authorize = useSelector(authSelector);
   const dispatch = useDispatch();
   const onSubmit = (values: any) => {
-    dispatch(registerUser(values, history));
+    dispatch(registerUser(values));
   };
   return !authorize ? (
     <div className="wrapper">

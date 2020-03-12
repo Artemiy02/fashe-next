@@ -1,11 +1,10 @@
 import React from 'react';
 import authSelector from 'selectors/auth';
 import redirect from 'services/redirect_service';
+import { NextPage } from 'next';
 
-export const PrivateRoute = <P extends object>(
-  Component: React.ComponentType<P>
-) => {
-  const Wrapper = (props) => <Component {...props} />;
+export const PrivateRoute = (Component: NextPage) => {
+  const Wrapper = (pageProps) => <Component {...pageProps} />;
 
   Wrapper.getInitialProps = async (ctx) => {
     const state = ctx.store.getState();
@@ -14,7 +13,10 @@ export const PrivateRoute = <P extends object>(
     if (!isAuth) {
       redirect('/login?redirected=true', ctx);
     }
-    return { store: ctx.store };
+    const props = Component.getInitialProps
+      ? await Component.getInitialProps(ctx)
+      : {};
+    return props;
   };
 
   return Wrapper;

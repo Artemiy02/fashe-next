@@ -21,6 +21,6 @@ const rootReducer = combineReducers({
   initPath: initPathReducer
 });
 
-export type AppState = any;
+export type AppState = ReturnType<typeof rootReducer>;
 
 export default rootReducer;

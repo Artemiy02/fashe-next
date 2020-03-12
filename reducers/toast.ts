@@ -23,7 +23,7 @@ const toastReducer = createReducer(initialState, (handleAction) => [
     type: action.payload.type,
     message: action.payload.message
   })),
-  handleAction(cleanToast, (state, action) => ({
+  handleAction(cleanToast, (state) => ({
     ...state,
     type: null,
     message: ''

@@ -40,7 +40,6 @@ const reducer = createReducer(initialState, (handleAction) => [
           }
         ]
   ),
-
   handleAction(deleteFromCartAction, (state, action) =>
     state.filter((product) => product._id !== action.payload)
   )
