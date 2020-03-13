@@ -1,6 +1,6 @@
 import jwtDecode from 'jwt-decode';
 import ApiService from 'services/ApiService';
-import { Dispatch, State } from 'redux';
+import { Dispatch } from 'redux';
 import { IUser } from 'types/Login';
 import { setToast } from 'reducers/toast';
 import { getErrors } from 'reducers/Errors';
@@ -8,6 +8,7 @@ import { setCurrentUser } from 'reducers/Authorize';
 import { AuthToken } from 'services/auth_token';
 import Router from 'next/router';
 import initPathSelector from 'selectors/initPath';
+import { AppState } from 'reducers';
 
 // Register user
 export const registerUser = (userData: any) => async (dispatch: Dispatch) => {
@@ -29,7 +30,7 @@ export const registerUser = (userData: any) => async (dispatch: Dispatch) => {
 // Login - Get User Token
 export const loginUser = (userData: IUser) => async (
   dispatch: Dispatch,
-  getState: () => State
+  getState: () => AppState
 ) => {
   try {
     const res = await ApiService.post('/users/login', userData);
@@ -63,7 +64,7 @@ export const loginUser = (userData: IUser) => async (
 // Login by socials
 export const socialLoginUser = (user: any, type: string) => async (
   dispatch: Dispatch,
-  getState: () => State
+  getState: () => AppState
 ) => {
   try {
     const res = await ApiService.post(`/users/auth/${type}`, user);
