@@ -1,4 +1,5 @@
 import 'styles/util.scss';
+import 'styles/shop.scss';
 import 'styles/login.scss';
 import 'styles/css/main.css';
 import 'styles/slider-animating.css';

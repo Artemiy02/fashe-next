@@ -1,5 +1,4 @@
 /* eslint-disable */
-import 'styles/shop.scss';
 // import queryString from 'query-string';
 import Layout from 'components/layout/Layout';
 import getCategoriesSelector from 'selectors/category';
@@ -41,13 +40,13 @@ const Shop = (props) => {
   // const [queryParam, setQueryParam] = useState(props.queryParam);
   const initialCategory = { title: 'All', isActive: true } as ICategory;
 
+  const categoriesInStore = useSelector(getCategoriesSelector);
   const [allCategories, setAllCategories] = useState([
-    initialCategory
-  ] as ICategory[]);
+    initialCategory,
+    ...categoriesInStore
+  ]);
 
   const changeActiveCategory = (str: string) => {
-    console.log('dddddddddddddddd', str);
-
     setAllCategories(
       allCategories.map((c) =>
         c.title.toLocaleLowerCase() === str.toLocaleLowerCase()
@@ -57,27 +56,20 @@ const Shop = (props) => {
     );
   };
 
-  const categoriesInStore = useSelector(getCategoriesSelector);
+  const queryParam = router?.query?.category?.toString();
 
   useEffect(() => {
     if (Array.isArray(categoriesInStore) && categoriesInStore.length) {
       setAllCategories([initialCategory, ...categoriesInStore]);
-      // setQueryParam(router?.query?.category);
     }
-  }, [categoriesInStore]);
-
-  const queryParam = router?.query?.category?.toString();
-
-  useEffect(() => {
-    console.log('router : ', router?.query?.category);
-    if (queryParam) {
-      const exist = (categoriesInStore as ICategory[]).find(
+    if (queryParam && allCategories.length > 1) {
+      const exist = allCategories.find(
         (c) => c.title.toLowerCase() === queryParam.toLowerCase()
       );
       console.log('exist: ', exist);
       exist ? changeActiveCategory(queryParam) : changeActiveCategory('all');
     }
-  }, [queryParam]);
+  }, [allCategories.length, categoriesInStore]);
 
   return (
     <Layout>
