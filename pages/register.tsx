@@ -11,9 +11,7 @@ import { RouteComponentProps, Redirect } from 'react-router';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { validateRegisterForm, INewUser } from 'utils/Validations';
 
-export type AllFormProps = IUser &
-  InjectedFormProps<INewUser> &
-  RouteComponentProps;
+export type AllFormProps = IUser & InjectedFormProps<INewUser> & RouteComponentProps;
 
 const RegisterForm: FunctionComponent<AllFormProps> = ({ handleSubmit }) => {
   const errors = useSelector(errorsSelector);
@@ -57,9 +55,7 @@ const RegisterForm: FunctionComponent<AllFormProps> = ({ handleSubmit }) => {
               className="form-control"
               label="Password"
             />
-            {errors.password && (
-              <span className="error-msg">{errors.password}</span>
-            )}
+            {errors.password && <span className="error-msg">{errors.password}</span>}
           </div>
           <div className="form-group">
             <Field
@@ -69,9 +65,7 @@ const RegisterForm: FunctionComponent<AllFormProps> = ({ handleSubmit }) => {
               className="form-control"
               label="Confirm Password"
             />
-            {errors.confirmPassword && (
-              <span className="error-msg">{errors.confirmPassword}</span>
-            )}
+            {errors.confirmPassword && <span className="error-msg">{errors.confirmPassword}</span>}
           </div>
           <div className="form-group">
             <button type="submit" className="btn-sbmt">
