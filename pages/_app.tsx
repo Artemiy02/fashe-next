@@ -8,7 +8,6 @@ import 'styles/fonts/themify/themify-icons.css';
 import 'react-animated-slider/build/horizontal.css';
 import 'styles/fonts/elegant-font/html-css/style.css';
 import 'styles/fonts/Linearicons-Free-v1.0.0/icon-font.min.css';
-import 'styles/fonts/font-awesome-4.7.0/css/font-awesome.min.css';
 import React from 'react';
 import App, { AppContext } from 'next/app';
 import withRedux from 'next-redux-wrapper';
@@ -24,9 +23,7 @@ interface Props {
 class MyApp extends App<Props> {
   static async getInitialProps({ Component, ctx }: AppContext) {
     return {
-      pageProps: Component.getInitialProps
-        ? await Component.getInitialProps(ctx)
-        : {}
+      pageProps: Component.getInitialProps ? await Component.getInitialProps(ctx) : {}
     };
   }
 
