@@ -5,10 +5,11 @@ import { IUser } from 'types/Login';
 import { setToast } from 'reducers/toast';
 import { getErrors } from 'reducers/Errors';
 import { setCurrentUser } from 'reducers/Authorize';
-import { AuthToken } from 'services/auth_token';
+import { AuthToken, TOKEN_STORAGE_KEY } from 'services/auth_token';
 import Router from 'next/router';
 import initPathSelector from 'selectors/initPath';
 import { AppState } from 'reducers';
+import Cookie from 'js-cookie';
 
 // Register user
 export const registerUser = (userData: any) => async (dispatch: Dispatch) => {
@@ -18,9 +19,7 @@ export const registerUser = (userData: any) => async (dispatch: Dispatch) => {
     if (!res.ok) {
       return dispatch(getErrors(data));
     }
-    dispatch(
-      setToast({ type: 'success', message: 'User was successfully created!' })
-    );
+    dispatch(setToast({ type: 'success', message: 'User was successfully created!' }));
     Router.push('/login');
   } catch (err) {
     dispatch(setToast({ type: 'error', message: err.message }));
@@ -96,8 +95,10 @@ export const socialLoginUser = (user: any, type: string) => async (
 
 // Log user out
 export const logoutUser = () => (dispatch: Dispatch) => {
-  // Remove token from localStorage
-  localStorage.removeItem('jwtToken');
+  // Remove token from cookies
+  Cookie.remove(TOKEN_STORAGE_KEY);
+
   // Set current user to {} which will set isAuthenticated to false
   dispatch(setCurrentUser({}));
+  Router.push('/login');
 };
