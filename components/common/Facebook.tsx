@@ -17,7 +17,7 @@ const Facebook: FunctionComponent<IFacebookProps> = ({ textButton }) => {
       email: response.email
     };
 
-    response.status === 'connected' && dispatch(socialLoginUser(user, 'facebook'));
+    response.name && dispatch(socialLoginUser(user, 'facebook'));
   };
 
   return (
