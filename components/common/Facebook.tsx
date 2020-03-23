@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { socialLoginUser } from 'actions/Authorize';
 
 interface IFacebookProps {
-  textButton: string
+  textButton: string;
 }
 
 const Facebook: FunctionComponent<IFacebookProps> = ({ textButton }) => {
@@ -14,10 +14,10 @@ const Facebook: FunctionComponent<IFacebookProps> = ({ textButton }) => {
     const user = {
       id: response.id,
       name: response.name,
-      email: response.email,
+      email: response.email
     };
 
-    dispatch(socialLoginUser(user, 'facebook'));
+    response.status === 'connected' && dispatch(socialLoginUser(user, 'facebook'));
   };
 
   return (

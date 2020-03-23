@@ -1,5 +1,4 @@
 import React from 'react';
-import authSelector from 'selectors/auth';
 import redirect from 'services/redirect_service';
 import { NextPage } from 'next';
 import { setCurrentUser } from 'reducers/Authorize';
